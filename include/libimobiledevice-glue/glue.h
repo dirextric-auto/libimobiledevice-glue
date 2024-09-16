@@ -1,7 +1,8 @@
 /*
- * common.h
+ * glue.h
+ * Common definitions
  *
- * Copyright (c) 2020 Nikias Bassen, All Rights Reserved.
+ * Copyright (c) 2024 Nikias Bassen, All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,25 +19,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __COMMON_H
-#define __COMMON_H
+#ifndef __GLUE_H
+#define __GLUE_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#ifdef LIMD_GLUE_STATIC
-  #define LIMD_GLUE_API
-#elif defined(_WIN32)
-  #define LIMD_GLUE_API __declspec( dllexport )
-#else
-  #if __GNUC__ >= 4
-    #define LIMD_GLUE_API __attribute__((visibility("default")))
+#ifndef LIMD_GLUE_API
+  #ifdef LIMD_GLUE_STATIC
+    #define LIMD_GLUE_API
+  #elif defined(_WIN32)
+    #define LIMD_GLUE_API __declspec(dllimport)
   #else
     #define LIMD_GLUE_API
   #endif
 #endif
 
-#include "libimobiledevice-glue/glue.h"
+LIMD_GLUE_API const char* libimobiledevice_glue_version();
 
 #endif

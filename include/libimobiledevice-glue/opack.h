@@ -1,7 +1,8 @@
 /*
- * common.h
+ * opack.h
+ * "opack" format encoder/decoder implementation.
  *
- * Copyright (c) 2020 Nikias Bassen, All Rights Reserved.
+ * Copyright (c) 2021 Nikias Bassen, All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,26 +18,13 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
+#ifndef __OPACK_H
+#define __OPACK_H
 
-#ifndef __COMMON_H
-#define __COMMON_H
+#include <libimobiledevice-glue/glue.h>
+#include <plist/plist.h>
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+LIMD_GLUE_API void opack_encode_from_plist(plist_t plist, unsigned char** out, unsigned int* out_len);
+LIMD_GLUE_API int opack_decode_to_plist(unsigned char* buf, unsigned int buf_len, plist_t* plist_out);
 
-#ifdef LIMD_GLUE_STATIC
-  #define LIMD_GLUE_API
-#elif defined(_WIN32)
-  #define LIMD_GLUE_API __declspec( dllexport )
-#else
-  #if __GNUC__ >= 4
-    #define LIMD_GLUE_API __attribute__((visibility("default")))
-  #else
-    #define LIMD_GLUE_API
-  #endif
-#endif
-
-#include "libimobiledevice-glue/glue.h"
-
-#endif
+#endif /* __OPACK_H */
